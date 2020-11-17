@@ -68,15 +68,14 @@ class User(AbstractBaseUser):
 
 class Character(models.Model):
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
-    character_name = models.CharField(max_length=32, unique=True, primary_key=True)
+    name = models.CharField(max_length=32, unique=True, primary_key=True)
 
     def __str__(self):
-        return self.character_name
+        return self.name
 
 class Item(models.Model):
-    item_name = models.CharField(max_length=32, unique=False)
-
-    item_type = models.CharField(
+    name = models.CharField(max_length=32, unique=False)
+    type = models.CharField(
         max_length=10,
         blank=True,
     )
@@ -85,7 +84,9 @@ class Item(models.Model):
         models.CharField(max_length=10, blank=False),
         size=4,
     )
-    current_owner = models.ForeignKey(Character, on_delete=models.PROTECT)
+    owner = models.ForeignKey(Character, on_delete=models.PROTECT)
+
+    quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.item_name
+        return self.name

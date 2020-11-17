@@ -16,18 +16,17 @@ class ItemCreationSerializer(serializers.ModelSerializer):
         model = Item
         fields = "__all__"
 
-class ItemDataSerializer(serializers.Serializer):
-    id           = serializers.CharField()
-    item_type    = serializers.CharField()
-    enhancements = serializers.ListField()
+class ItemDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        exclude = ["id", "owner"]
 
 class ItemInfoSerializer(serializers.ModelSerializer):
-    # item_name = serializers.CharField()
-    item_data = ItemDataSerializer(source="*", read_only=True)
+    data = ItemDataSerializer(source="*", read_only=True)
 
     class Meta:
         model = Item
-        fields = ["item_name", "item_data"]
+        fields = ["id", "data"]
         read_only_fields = fields
 
 class CharacterInventorySerializer(serializers.ModelSerializer):
@@ -35,7 +34,7 @@ class CharacterInventorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Character
-        fields = ["character_name", "inventory"]
+        fields = ["name", "inventory"]
         read_only_fields = fields
 
 class UserDataSerializer(serializers.ModelSerializer):
