@@ -139,4 +139,5 @@ cython_debug/
 
 # Vistual Studio Code settings
 .vscode/
+
 migrations/
