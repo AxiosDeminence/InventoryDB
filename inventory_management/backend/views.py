@@ -148,7 +148,7 @@ class CharacterManagement(APIView):
         
         if char.owner != request.user:
             return Response(status=status.HTTP_401_UNAUTHORIZED, data={
-                "message": "Cannot delete item that is not yours."
+                "message": "Cannot delete character that is not yours."
             })
         
         char.delete()
